@@ -1,6 +1,7 @@
 import 'package:dairy/Screens/second.dart';
 import 'package:dairy/cards/itemcard.dart';
 import 'package:dairy/cards/nextBTN.dart';
+import 'package:dairy/theme/background.dart';
 import 'package:dairy/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +29,7 @@ class _ItemscreenState extends State<Itemscreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Image.asset(
-          //   'assets/images/backgroundimage1.png',
-          //   fit: BoxFit.cover,
-          // ),
+          backscreen(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
