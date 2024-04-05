@@ -1,3 +1,4 @@
+import 'package:dairy/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,13 +8,13 @@ class backscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.lightGreen,
+      // color:AppColor.primarybordercol,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        // child: Image.asset(
-        //   'assets/images/backgroundimage1.png',
-        //   fit: BoxFit.cover,
-        // )
+        child: Image.asset(
+          'assets/images/background2.png',
+          fit: BoxFit.cover,
+        )
     );
   }
 }

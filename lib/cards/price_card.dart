@@ -7,9 +7,10 @@ class price extends StatelessWidget {
   String img;
   int amount;
   bool select=false;
+  int total;
 
 
-  price(this.img, this.amount,this.select);
+  price(this.img, this.amount,this.select,this.total);
 
   @override
   Widget build(BuildContext context) {
@@ -20,45 +21,59 @@ class price extends StatelessWidget {
     return Container(
 
       decoration: BoxDecoration(
-          color: AppColor.primarygray,
+          color: select ? AppColor.selectedbordercol: AppColor.primarybordercol,
           borderRadius: BorderRadius.circular(10), // Container color
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.9), // Shadow color
-              spreadRadius: 5, // Spread radius
-              blurRadius: 7, // Blur radius
-              offset: Offset(0, 3), // Offset from the top
-            ),
-          ],
-          border: Border.all(
-            color: select?AppColor.selectedbordercol:AppColor.primarybordercol,
-            width: 3,
-          )
+        boxShadow: [
+          BoxShadow(
+            color: Colors.white, // Shadow color
+            spreadRadius: 1, // Spread radius
+            blurRadius: 8, // Blur radius
+            offset: Offset(4,4), // Offset from the top
+          ),   BoxShadow(
+            color:  AppColor.primarygray, // Shadow color
+            spreadRadius: 1, // Spread radius
+            blurRadius: 8, // Blur radius
+            offset: Offset(-4,-4), // Offset from the top
+          ),
+
+        ],
+
       ),
       margin: EdgeInsets.only(left: 60),
-      width: 300,
-      height:200,
-      child: Row(
-        children: [
+      width: 250,
+      height:320,
 
+          child: Column(
 
-          Column(
-
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
 
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0,top: 20.0),
-                child: Text(amount.toString(),style: TextStyle(
-                  color: Colors.white
-                ),),
-              ),
+              SizedBox(height: 20,),
 
-              SizedBox(height:20),
-              Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Container(
+              Text("${amount.toString()}ML",style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30
+                ),),
+
+
+
+              SizedBox(),
+
+
+
+             Container(
+                  width: 150,
+                  height: 150,
+                  child: Image.asset(
+                    img,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+
+
+              SizedBox(),
+             Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.transparent,
@@ -67,38 +82,28 @@ class price extends StatelessWidget {
                           width: 1
                       )
                   ),
-                  padding:  EdgeInsets.symmetric(vertical: 8,horizontal: 18),
-                  child: Text("Select",
+                  padding:  EdgeInsets.symmetric(vertical: 8,horizontal: 28),
+                  child: Text(total.toString(),
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 6,
+                      fontSize: 15,
+                      fontFamily: 'bolt-regular.ttf',
                     ),),
                 ),
-              ),
+
 
               SizedBox()
             ],
           ),
 
-          SizedBox(width:40,),
-
-          Container(
-            width: 100,
-            height: 100,
-            child: Image.asset(
-              img,
-              fit: BoxFit.cover,
-            ),
-          ),
-          SizedBox(width: 20,),
 
 
 
 
 
 
-        ],
-      ),
+
+
 
 
 

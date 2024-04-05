@@ -2,6 +2,13 @@
 import 'package:dairy/Screens/front.dart';
 import 'package:flutter/material.dart';
 
+import 'Screens/Demo.dart';
+import 'Screens/animation.dart';
+import 'Screens/thanks.dart';
+import 'Screens/third.dart';
+import 'Widgets/waterfillanimation.dart';
+
+
 
 
 void main() {

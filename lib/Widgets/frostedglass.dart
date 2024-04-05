@@ -3,15 +3,16 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class comp_name extends StatelessWidget {
+class frostedglass_ extends StatelessWidget {
 
 
 
-  const comp_name({super.key,required this.theheight,required this.thewidth, required this.theChild});
+  const frostedglass_({super.key,required this.theheight,required this.thewidth, required this.theChild,required this.thecolor});
 
   final thewidth;
   final theheight;
   final theChild;
+  final thecolor;
 
 
 
@@ -23,7 +24,7 @@ class comp_name extends StatelessWidget {
       child: Container(
         width: thewidth,
         height: theheight,
-        color: Colors.transparent,
+        color: thecolor,
 
         child: Stack(
           children: [
