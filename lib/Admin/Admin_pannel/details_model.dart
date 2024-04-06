@@ -7,14 +7,14 @@ class Product {
   final String quantity2;
   final String price3;
   final String quantity3;
+  bool isEnable;
   double? fat;
   int? calories;
   int? protein;
-  DateTime? expiryDate;
-  DateTime? insertionDate;
+  String? expiryDate;
+  String? insertionDate;
   int? stock;
 
-  // Constructor for creating product with basic information
   Product({
     required this.productId,
     required this.productName,
@@ -23,10 +23,10 @@ class Product {
     required this.price2,
     required this.quantity2,
     required this.price3,
+    required this.isEnable,
     required this.quantity3,
   });
 
-  // Named constructor for adding additional details to product
   Product.withDetails({
     required this.productId,
     required this.productName,
@@ -41,6 +41,47 @@ class Product {
     required this.protein,
     required this.expiryDate,
     required this.insertionDate,
+    required this.isEnable,
     required this.stock,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'productId': productId??'',
+      'productName': productName??'',
+      'price1': price1??'',
+      'quantity1': quantity1??'',
+      'price2': price2??'',
+      'quantity2': quantity2??'',
+      'price3': price3??'',
+      'quantity3': quantity3??'',
+      'isEnable':isEnable??true,
+      'fat': fat??0.0,
+      'calories': calories??0,
+      'protein': protein??0,
+      'expiryDate': expiryDate??'',
+      'insertionDate': insertionDate??'',
+      'stock': stock??0,
+    };
+  }
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product.withDetails(
+      productId: json['productId'],
+      productName: json['productName'],
+      price1: json['price1'],
+      quantity1: json['quantity1'],
+      price2: json['price2'],
+      quantity2: json['quantity2'],
+      price3: json['price3'],
+      isEnable:json['isEnable'],
+      quantity3: json['quantity3'],
+      fat: json['fat'],
+      calories: json['calories'],
+      protein: json['protein'],
+      expiryDate: json['expiryDate'],
+      insertionDate: json['insertionDate'],
+      stock: json['stock'],
+    );
+  }
 }

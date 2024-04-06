@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:dairy/Screens/second.dart';
 import 'package:dairy/Widgets/top_bar.dart';
 import 'package:dairy/cards/itemcard.dart';
 import 'package:dairy/cards/nextBTN.dart';
 import 'package:dairy/theme/background.dart';
-import 'package:dairy/theme/colors.dart';
+import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../Admin/Admin_pannel/details_model.dart';
 class Itemscreen extends StatefulWidget {
   const Itemscreen({Key? key}) : super(key: key);
 
@@ -22,7 +27,29 @@ class _ItemscreenState extends State<Itemscreen> {
     });
   }
 
-
+  List<Product> productDetails = [];
+  List<String> img=[
+    "assets/images/cow.png",
+    "assets/images/buffalo_.png",
+    "assets/images/butterMilk_.png",
+  ];
+  @override
+  void initState() {
+    super.initState();
+    loadProductList();
+  }
+  void loadProductList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? productListJson = prefs.getString('productList');
+    print(productListJson);
+    if (productListJson != null) {
+      List<dynamic> jsonList = jsonDecode(productListJson);
+      setState(() {
+        productDetails =
+            jsonList.map((json) => Product.fromJson(json)).toList();
+      });
+    }
+  }
 
 
   @override
@@ -38,45 +65,27 @@ class _ItemscreenState extends State<Itemscreen> {
               SizedBox(height: 20,),
               topbar(),
               SizedBox(height: 80,),
-              Align(
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () => selectedcard(0),
-                      child: item_card(
-                          "The Perfect cow Milk",
-                          12,
-                          14,
-                          15,
-                          "assets/images/cow.png",
-                          selectedcardindex == 0),
-                    ),
-                    GestureDetector(
-                      onTap: () => selectedcard(1),
-                      child: item_card(
-                          "The Perfect Buffalo Milk",
-                          10,
-                          20,
-                          18,
-                          "assets/images/buffalo_.png",
-                          selectedcardindex == 1),
-                    ),
-                    GestureDetector(
-                      onTap: () => selectedcard(2),
-                      child: item_card(
-                          "The Perfect Butter-Milk",
-                          12,
-                          14,
-                          15,
-                          "assets/images/butterMilk_.png",
-                          selectedcardindex == 2),
-                    ),
-                  ],
+              Container(
+                height: 400,
+                child: Expanded(
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                  
+                    itemCount: productDetails.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: (){
+                          selectedcardindex=index;
+                          setState(() {
+                  
+                          });
+                        },
+                          child: item_card(productDetails[index], img[index%3], selectedcardindex==index));
+                    },
+                  ),
                 ),
               ),
-              SizedBox(height: 8.0),
+              SizedBox(height:20),
 
 
               Row(

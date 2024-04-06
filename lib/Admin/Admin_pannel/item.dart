@@ -1,6 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'ProductForm.dart';
 import 'details_model.dart';
@@ -15,7 +17,23 @@ class Itemproduct extends StatefulWidget {
 
 class _ItemState extends State<Itemproduct> {
   List<Product> productDetails = [];
-
+ @override
+  void initState() {
+    super.initState();
+    loadProductList();
+  }
+  void loadProductList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? productListJson = prefs.getString('productList');
+    print(productListJson);
+    if (productListJson != null) {
+      List<dynamic> jsonList = jsonDecode(productListJson);
+      setState(() {
+        productDetails =
+            jsonList.map((json) => Product.fromJson(json)).toList();
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +90,15 @@ class _ItemState extends State<Itemproduct> {
               child: ListView.builder(
                 itemCount: productDetails.length,
                 itemBuilder: (context, index) {
-                  return ProductForm(index, productDetails);
+                  return ProductForm(index, productDetails,(List<Product> updatedList){
+                    productDetails=updatedList;
+                    String productListJson = jsonEncode(productDetails);
+                     print('updated ${productListJson}');
+                     saveProductList();
+                    setState(() {
+
+                    });
+                  });
                 },
               ),
             ),
@@ -185,7 +211,7 @@ class _ItemState extends State<Itemproduct> {
           ),
           actions: <Widget>[
             TextButton(
-              onPressed: () {
+              onPressed: () async{
                 setState(() {
                   productDetails.add(Product(
                     productId: newProductId,
@@ -193,10 +219,12 @@ class _ItemState extends State<Itemproduct> {
                     price1: newPrice1,
                     quantity1: newQuantity1,
                     price2: newPrice2,
+                    isEnable: true,
                     quantity2: newQuantity2,
                     price3: newPrice3,
                     quantity3: newQuantity3,
                   ));
+                   saveProductList();
                 });
                 Navigator.of(context).pop();
               },
@@ -207,4 +235,11 @@ class _ItemState extends State<Itemproduct> {
       },
     );
   }
+
+  void saveProductList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String productListJson = jsonEncode(productDetails);
+    prefs.setString('productList', productListJson);
+  }
+
 }

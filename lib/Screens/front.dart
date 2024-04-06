@@ -70,14 +70,16 @@ class _Front_State extends State<Front_> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: (){
-                    blueServices.triggerPipelineToConnect('B8:27:EB:38:FE:A7');
-                  },
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Container(
+                Container(
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+
+                          blueServices.triggerPipelineToConnect('6C:24:A6:3B:32:82');
+
+                        },
+                        child: Container(
                           child: Icon(
                             bt
                                 ? Icons.bluetooth_connected
@@ -86,17 +88,17 @@ class _Front_State extends State<Front_> with TickerProviderStateMixin {
                             color: bt ? AppColor.primarygray : AppColor.primarybordercol,
                           ),
                         ),
+                      ),
 
-                        SizedBox(height: 10,),
-                        Text(
-                          status,
-                          style: TextStyle(
-                              fontSize: 10, fontFamily: 'bolt-semibold.ttf',
-                          color: AppColor.primarygray,
-                          decoration: TextDecoration.none),
-                        ),
-                      ],
-                    ),
+                      SizedBox(height: 10,),
+                      Text(
+                        status,
+                        style: TextStyle(
+                            fontSize: 10, fontFamily: 'bolt-semibold.ttf',
+                        color: AppColor.primarygray,
+                        decoration: TextDecoration.none),
+                      ),
+                    ],
                   ),
                 ),
                 GestureDetector(

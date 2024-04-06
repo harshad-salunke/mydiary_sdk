@@ -1,17 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../Admin/Admin_pannel/details_model.dart';
 import '../theme/colors.dart';
 
 class item_card extends StatefulWidget {
-  String smt;
-  int Fat;
-  int protine;
-  int calories;
-  String img;
-  bool select;
-
-  item_card(this.smt, this.Fat, this.protine, this.calories, this.img, this.select);
+ Product product;
+String img;
+bool select;
+  item_card(this.product,this.img, this.select);
 
   @override
   State<item_card> createState() => _item_cardState();
@@ -88,7 +85,7 @@ class _item_cardState extends State<item_card> with TickerProviderStateMixin {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  widget.smt,
+                  widget.product.productName,
                   style: TextStyle(
                     fontFamily: 'bolt-semibold.ttf',
 
@@ -146,7 +143,7 @@ class _item_cardState extends State<item_card> with TickerProviderStateMixin {
                                                 left: 15.0, top: 15),
                                             child: Text(
 
-                                              widget.Fat.toString(), style: TextStyle(
+                                              widget.product.fat.toString(), style: TextStyle(
 
                                                 fontFamily: 'bolt-regular.ttf',
                                                 color: Colors.white,
@@ -172,7 +169,7 @@ class _item_cardState extends State<item_card> with TickerProviderStateMixin {
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 15.0, top: 5),
-                                            child: Text(widget.calories.toString(),
+                                            child: Text(widget.product.calories.toString(),
                                               style: TextStyle(
 
                                                   fontFamily: 'bolt-regular.ttf',
@@ -199,7 +196,7 @@ class _item_cardState extends State<item_card> with TickerProviderStateMixin {
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 15.0, top: 5),
-                                            child: Text(widget.protine.toString(),
+                                            child: Text(widget.product.protein.toString(),
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 14

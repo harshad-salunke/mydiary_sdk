@@ -1,37 +1,53 @@
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'DetailsPopup.dart';
 import 'details_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductForm extends StatefulWidget {
   final int id;
-  final List<Product> productDetails;
-
-  ProductForm(this.id, this.productDetails);
+  final List<Product> productDetail;
+  Function(List<Product>) callback;
+  ProductForm(this.id, this.productDetail,this.callback);
 
   @override
   State<ProductForm> createState() => _ProductFormState();
 }
 
 class _ProductFormState extends State<ProductForm> {
+  List<Product> productDetails = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    productDetails=widget.productDetail;
+    super.initState();
+  }
   void _showDetailsDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return DetailsPopup();
+        return DetailsPopup(productDetails[widget.id],(Product product){
+          productDetails[widget.id]=product;
+          print(product.toJson());
+          widget.callback(productDetails);
+        });
       },
     );
   }
 
 
   void remove(){
-    widget.productDetails.removeAt(widget.id);
+    productDetails.removeAt(widget.id);
+    widget.callback(productDetails);
   }
   @override
   Widget build(BuildContext context) {
     int id_ = widget.id;
-    Product product = widget.productDetails[id_];
+    Product product = productDetails[id_];
 
 
 
@@ -76,7 +92,10 @@ class _ProductFormState extends State<ProductForm> {
                 ],
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  productDetails[widget.id].isEnable=true;
+                  widget.callback(productDetails);
+                },
                 child: Text("Enable"),
                 style: ButtonStyle(
                   backgroundColor:
@@ -84,7 +103,10 @@ class _ProductFormState extends State<ProductForm> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  productDetails[widget.id].isEnable=false;
+                  widget.callback(productDetails);
+                },
                 child: Text("Disable"),
                 style: ButtonStyle(
                   backgroundColor:
@@ -103,10 +125,7 @@ class _ProductFormState extends State<ProductForm> {
               ),
               IconButton(
                 onPressed: () {
-                  setState(() {
-
-
-                  });
+                  remove();
                 },
                 icon: Icon(
                   Icons.remove_circle,
@@ -151,4 +170,5 @@ class _ProductFormState extends State<ProductForm> {
       ),
     );
   }
+
 }
