@@ -22,6 +22,9 @@ class _ItemscreenState extends State<Itemscreen> {
     });
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,25 +76,44 @@ class _ItemscreenState extends State<Itemscreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 30),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 60.0,top: 30),
-                  child: IgnorePointer(
-                    ignoring: selectedcardindex==-1,
-                    child: GestureDetector(
-                      onTap: () {
-                       if(selectedcardindex!=-1)( Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => pricescreen(product:selectedcardindex,)),
-                        ));
-                      },
-                      child: customBTN(true),
+              SizedBox(height: 8.0),
+
+
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: customBTN(false),
                     ),
                   ),
-                ),
+                  SizedBox(width: 80,),
+                  IgnorePointer(
+                    ignoring: selectedcardindex==-1,
+                    child: GestureDetector(
+                      onTap: () =>
+                      {
+                      if(selectedcardindex!=-1)(
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => pricescreen(product:selectedcardindex,)),
+                      )),
+
+                      },
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: customBTN(true),
+                      ),
+                    ),
+                  ),
+                ],
               ),
+
             ],
           ),
 

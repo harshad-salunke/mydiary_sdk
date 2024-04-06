@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/colors.dart';
 
-class item_card extends StatelessWidget {
+class item_card extends StatefulWidget {
   String smt;
   int Fat;
   int protine;
@@ -14,10 +14,48 @@ class item_card extends StatelessWidget {
   item_card(this.smt, this.Fat, this.protine, this.calories, this.img, this.select);
 
   @override
+  State<item_card> createState() => _item_cardState();
+}
+
+class _item_cardState extends State<item_card> with TickerProviderStateMixin {
+
+
+  late AnimationController _controller;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 500),
+      vsync: this,
+    );
+    if (widget.select) {
+      _controller.repeat(reverse: true);
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant item_card oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.select && !_controller.isAnimating) {
+      _controller.repeat(reverse: true);
+    } else if (!widget.select && _controller.isAnimating) {
+      _controller.stop();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: select ? AppColor.selectedbordercol: AppColor.primarybordercol,
+          color: widget.select ? AppColor.selectedbordercol: AppColor.primarybordercol,
           borderRadius: BorderRadius.circular(25), // Container color
           boxShadow: [
             BoxShadow(
@@ -33,11 +71,7 @@ class item_card extends StatelessWidget {
             ),
 
           ],
-          // border: Border.all(
-          //   color: select ? AppColor.selectedbordercol : AppColor
-          //       .primarybordercol,
-          //   width: 3,
-          // )
+
       ),
       margin: EdgeInsets.only(left: 60),
       width: 350,
@@ -54,7 +88,7 @@ class item_card extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  smt,
+                  widget.smt,
                   style: TextStyle(
                     fontFamily: 'bolt-semibold.ttf',
 
@@ -112,7 +146,7 @@ class item_card extends StatelessWidget {
                                                 left: 15.0, top: 15),
                                             child: Text(
 
-                                              Fat.toString(), style: TextStyle(
+                                              widget.Fat.toString(), style: TextStyle(
 
                                                 fontFamily: 'bolt-regular.ttf',
                                                 color: Colors.white,
@@ -138,7 +172,7 @@ class item_card extends StatelessWidget {
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 15.0, top: 5),
-                                            child: Text(calories.toString(),
+                                            child: Text(widget.calories.toString(),
                                               style: TextStyle(
 
                                                   fontFamily: 'bolt-regular.ttf',
@@ -165,7 +199,7 @@ class item_card extends StatelessWidget {
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 15.0, top: 5),
-                                            child: Text(protine.toString(),
+                                            child: Text(widget.protine.toString(),
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 14
@@ -260,13 +294,21 @@ class item_card extends StatelessWidget {
               ],
             ),
 
-            Container(
-              width: 130,
-              height: 130,
-              child: Image.asset(
-                img,
-                fit: BoxFit.cover,
-              ),
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: 1 + _controller.value * 0.5,
+                  child: Container(
+                    width: 130,
+                    height: 130,
+                    child: Image.asset(
+                      widget.img,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
             ),
 
             Padding(
@@ -293,8 +335,5 @@ class item_card extends StatelessWidget {
       ),
     );
   }
-
-
-
-  }
+}
 
