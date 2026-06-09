@@ -198,6 +198,15 @@ class BlueServices {
 
       // Now attempt to connect
       if(isAlreadyPaired){
+        Fluttertoast.showToast(
+          msg: 'Connected',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         _connection = await BluetoothConnection.toAddress(address);
         Fluttertoast.showToast(
           msg: 'Connected to IoT device!',
@@ -262,6 +271,7 @@ class BlueServices {
 
   Future<void> sendDataOverSingleBluetooth(String dataToSend) async {
     try {
+
       _connection?.output.add(utf8.encode(dataToSend));
       await _connection?.output.allSent;
       Fluttertoast.showToast(
@@ -293,11 +303,11 @@ class BlueServices {
         return;
       }
 
-   bool isConnected=   await connectToDevice(blueAddress);
-    if(isConnected){
-      await sendDataOverSingleBluetooth("100");
+      bool isConnected=   await connectToDevice(blueAddress);
+      if(isConnected){
+        await sendDataOverSingleBluetooth("100");
 
-    }
+      }
 
     } catch (e) {
       Fluttertoast.showToast(

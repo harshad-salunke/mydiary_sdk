@@ -76,7 +76,7 @@ class _Front_State extends State<Front_> with TickerProviderStateMixin {
                       GestureDetector(
                         onTap: (){
 
-                          blueServices.triggerPipelineToConnect('6C:24:A6:3B:32:82');
+                          blueServices.triggerPipelineToConnect('50:DA:D6:83:B3:69');
 
                         },
                         child: Container(
